@@ -413,7 +413,12 @@ public class WingCode {
 		 hrsInput = new ChoiceBox<Integer>();
 		hrsInput= fillChoiceBoxWithValues(hrsInput,1,24);
 		 minutesInput = new ChoiceBox<Integer>();
-		minutesInput= fillChoiceBoxWithValues(minutesInput,0,60);
+		//minutesInput= fillChoiceBoxWithValues(minutesInput,0,60);
+		 minutesInput.getItems().add(0);
+		 minutesInput.getItems().add(15);
+		 minutesInput.getItems().add(30);
+		 minutesInput.getItems().add(45);
+
 	//	int hours = ;
 		// minutes = ;
 		inputTextFieldLabelContainer.getChildren().addAll(new Label("Below choose a date and select time(choosing 10 from 1st and 0 from 2nd list would assign shift starting at 10:00 AM for chosen date)for assigning shift."));
@@ -521,7 +526,7 @@ public Date setDate(int[] date)
 }
 **/
 //-----------------------------------------------------------------------------------------------------------------------------------------
-//The code below was written to manage another fxml ManagerGUI controller but was having issues changing stages. I wanted to keep it bcz I want to work on it later
+//The code below was written to manage another fxml ManagerGUI controller but couldnt figure out how to move back and forth one stage to another. I wanted to keep it bcz I want to work on it later
 
 
 

@@ -9,8 +9,18 @@
 
 <VBox alignment="CENTER" prefHeight="525.0" prefWidth="552.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.WingCode">
    <children>
+      <Label prefHeight="354.0" prefWidth="520.0" text="This is a hospital wing management system, where nurses can  check their schedules. Each wing has one manager and list of nurses assigned. Managers can add new nurses and assign new shifts to them and check schedule by entering their employee Id. They can see all nurses available to figure out their employee Id." textFill="#056127" wrapText="true">
+         <font>
+            <Font name="Arial Black" size="14.0" />
+         </font>
+      </Label>
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
+            <Button fx:id="managerButton" mnemonicParsing="false" onAction="#accessManager" prefHeight="70.0" prefWidth="276.0" text="Manager" textFill="#100a59" textOverrun="WORD_ELLIPSIS">
+               <font>
+                  <Font name="Cooper Black" size="25.0" />
+               </font>
+            </Button>
             <Button fx:id="userNurseButton" contentDisplay="CENTER" depthTest="ENABLE" mnemonicParsing="false" onAction="#accessNurse" prefHeight="69.0" prefWidth="282.0" text="Nurse" textAlignment="CENTER" textFill="#8d1212">
                <font>
                   <Font name="System Bold" size="26.0" />
@@ -19,17 +29,7 @@
                   <Insets bottom="10.0" right="10.0" top="10.0" />
                </opaqueInsets>
             </Button>
-            <Button fx:id="managerButton" mnemonicParsing="false" onAction="#accessManager" prefHeight="70.0" prefWidth="276.0" text="Manager" textFill="#100a59" textOverrun="WORD_ELLIPSIS">
-               <font>
-                  <Font name="Cooper Black" size="25.0" />
-               </font>
-            </Button>
          </children>
       </HBox>
-      <TextField alignment="TOP_LEFT" blendMode="BLUE" depthTest="ENABLE" prefHeight="100.0" promptText="This is a hospital ward management system, where nurses can add and discharge patients and check their schedules. Manager can add nurses and post weekly schedule">
-         <font>
-            <Font size="21.0" />
-         </font>
-      </TextField>
    </children>
 </VBox>

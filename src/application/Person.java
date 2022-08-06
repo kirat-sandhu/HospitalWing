@@ -1,5 +1,6 @@
 package application;
 
+import java.time.LocalDate;
 import java.util.Date;
 //parent class of nurse, manager and patient..
 //To limit the scope of thids project patient wasnt included in this project
@@ -48,7 +49,7 @@ public class Person  {
 		
 		if(newPerson !=null)
 		{
-			newPerson = getName() + " \t"+    dateOfBirth.toString();
+			newPerson = getName() + " \t"+   ( dateOfBirth).toString();
 		}
 		return newPerson;
 	}

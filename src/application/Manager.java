@@ -3,15 +3,15 @@ package application;
 import java.util.ArrayList;
 import java.util.Date;
 
+//For simplicity of this project there will be only one Manager with employee number --101
 
-
+//Every wing in the hospital has one manager, who adds new nurses and assigns Shifts to them
 //Managers are the employees that have list of nurses working, 
 //can add nurses to the list and remove them. they also assign shifts to all the nurses
 //Managers can add new nurses to their wing and when they add nurses an employeeNumber gets assigned to a nurse
 //nurse List--> stores all the nurses under this nurses
 //for sample two nurses with current date  as date of birth
-
-//For simplicity of this project there will be only one Manager with employee number --101
+//Overrides toString method from parent class
 
 public class Manager extends Person {
 	
@@ -47,11 +47,12 @@ public class Manager extends Person {
 	{
 		Nurse newNurse = new Nurse(fName, lName, dob,assignEmployeeNumber() ) ;
 		nurseList.add(newNurse);
-		System.out.println(newNurse.printScheduleOfNurse());
+		//System.out.println(newNurse.printScheduleOfNurse());
 	}
 	
 	
-	//searches nurses by employee id and removes it from the list
+	//searches nurses by employee id and removes it from the list of nurses
+	//this method hasnt been used
 	public void removeNurse(long empId)
 	{
 		for(Nurse n :nurseList)
@@ -99,12 +100,12 @@ public class Manager extends Person {
 	{
 		String addShiftError="";
 		
-
+		
 		for(Nurse n : nurseList)
 		{
 			if(n.getEmployeeId()==empNumber)
 			{
-			//	System.out.println(empNumber);
+				System.out.println("in assign shift"+ empNumber);
 				addShiftError = n.addShifts(newShift);
 				if(addShiftError.equals("error"))
 					addShiftError = "Please add a valid shift";
@@ -153,15 +154,19 @@ public class Manager extends Person {
 	{
 		
 		String sch = "";
+		int i = 0;
 		if(nurseList.size()==0)
 			return "No nurses exist";
 		for(Nurse n : nurseList)
 		{
-			if(n.getEmployeeId()==empNumber)
+			if(n.getEmployeeId()==empId)
 			{
-				sch += n.getSchedule();
+				sch = sch+ "Shift start Date"+"\t" +"Shift end time"+"\n";
+				sch = "\t"+ n.getSchedule();
+				System.out.println("in sched printing nurse matched "+sch);
+
 			}
-			//System.out.println(sch);
+			System.out.println("in sched printing "+sch);
 		}
 		return sch;
 	}

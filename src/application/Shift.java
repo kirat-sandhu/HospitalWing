@@ -154,7 +154,7 @@ public class Shift {
 		 {
 			 dayOfArrival=end.getTime();
 			 dayOfDeparture= start.getTime();
-			 estimatedLength = (( dayOfArrival-dayOfDeparture)/(1000*3600));
+			 estimatedLength = (( dayOfArrival-dayOfDeparture)/millisecondsPerHour);
 		 }
 		 
 		 if(estimatedLength==8||estimatedLength==10||estimatedLength==4)

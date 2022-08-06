@@ -34,37 +34,40 @@ public class Nurse extends Person {
 	//adds newShift in the schedule of the nurse if shift is valid
 	//returns string with text error if shift was not valid
 	//and empty string otherwise
-	public String addShifts(Shift newShift)
+	public String addShifts(Shift oneShift)
 	{
 		
 		boolean shiftIsValid= false;
 		String error = "";
 		int i =0;
 		
-		if(mySchedule.size()==0)
-			mySchedule.add(  (newShift));
+		Shift newShift = oneShift;
+		if(this.getSchedule().size()==0)
+			this.getSchedule().add((newShift));
 		else
 		{	
-			for( i = 0; i< mySchedule.size();i++)
+			for( i = 0; i< this.getSchedule().size();i++)
 			{	
-				shiftIsValid = (!mySchedule.get(i).overlapsWith(newShift))&&newShift.shiftLengthIsValid()&&
-						(!mySchedule.get(i).timeDiffInShiftsValid(newShift));
+				shiftIsValid = (!mySchedule.get(i).overlapsWith(newShift))|| newShift.shiftLengthIsValid();
+						
 				if(!shiftIsValid)
 				{	
 					error= "error";
 					return error;
 				
 				}
-				else if(!mySchedule.get(i).isBefore(newShift))
+				else// if(!this.getSchedule().get(i).isBefore(newShift))
 				{
-					mySchedule.add(i, (newShift));
-					return error;
+					this.getSchedule().add(i, (newShift));
+					mySchedule.add((newShift));
+
+				
 				}
 				
 			
 			}
-			mySchedule.add((newShift));
-			System.out.println(error);
+			//mySchedule.add((newShift));
+			System.out.println("in nurse add :"+error);
 		}
 		
 		return error;
@@ -84,12 +87,12 @@ public class Nurse extends Person {
 		String myShifts="";
 		if(mySchedule.size()==0)
 			return "No shifts assigned";
-		myShifts = "Schedule for" + getName() + '\n';
+		myShifts = "Schedule for" + super.getName() + '\n';
 		
 		
 		for(int i = 0; i< mySchedule.size();i++)
 		{
-			myShifts =myShifts + i + '\t' +mySchedule.get(i).toString();
+			myShifts =myShifts + i + '\t' + mySchedule.get(i).toString();
 		}
 		
 		
