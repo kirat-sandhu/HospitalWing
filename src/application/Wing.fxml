@@ -11,7 +11,7 @@
    <children>
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button fx:id="userNurseButton" contentDisplay="CENTER" depthTest="ENABLE" mnemonicParsing="false" prefHeight="69.0" prefWidth="282.0" text="Nurse" textAlignment="CENTER" textFill="#8d1212">
+            <Button fx:id="userNurseButton" contentDisplay="CENTER" depthTest="ENABLE" mnemonicParsing="false" onAction="#accessNurse" prefHeight="69.0" prefWidth="282.0" text="Nurse" textAlignment="CENTER" textFill="#8d1212">
                <font>
                   <Font name="System Bold" size="26.0" />
                </font>

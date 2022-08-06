@@ -14,7 +14,7 @@ public class Manager extends Person {
 	
 	private ArrayList<Nurse> nurseList;
 	private long empNumber;
-	private  long firstEmpNum = 10001;
+	private  long firstEmpNum = 200;
 	public Manager(String fName, String lName, Date dob, long empId) 
 	{
 		
@@ -22,6 +22,9 @@ public class Manager extends Person {
 		empNumber = empId;
 		nurseList = new ArrayList<Nurse>();
 		
+		this.addNurses("Ian","Corbette", new Date());
+		this.addNurses("Sara","Xeng", new Date());
+		System.out.println(assignShift(201,new Date(),new Date(new Date().getTime()+(3600000*8)) ));
 	}
 
 	//returns the next Available Employee Number to be Assigned when a new Nurse Is Added to the Wing
@@ -34,12 +37,14 @@ public class Manager extends Person {
 		
 	}
 	
+	
+	
 	//adds a given nurse to the list and assigns an employee Number
 	public void addNurses(String fName, String lName, Date dob)
 	{
 		Nurse newNurse = new Nurse(fName, lName, dob,assignEmployeeNumber() ) ;
 		nurseList.add(newNurse);
-		
+		System.out.println(newNurse.printScheduleOfNurse());
 	}
 	
 	
@@ -61,11 +66,15 @@ public class Manager extends Person {
 		String addShiftError="";
 		
 		Shift newShift = new Shift(start, end);
+		System.out.println(start);
+		System.out.println(end);
+
+
 		for(Nurse n : nurseList)
 		{
 			if(n.getEmployeeId()==empNumber)
 			{
-				
+				System.out.println(empNumber);
 				addShiftError = n.addShifts(newShift);
 				if(addShiftError.equals("error"))
 					addShiftError = "Please add a valid shift";
@@ -107,15 +116,32 @@ public class Manager extends Person {
 	}			
 	public String printSchedule(long empId)
 	{
+		
 		String sch = "";
+		if(nurseList.size()==0)
+			return "No nurses exist";
 		for(Nurse n : nurseList)
 		{
 			if(n.getEmployeeId()==empNumber)
 			{
 				sch += n.getSchedule();
 			}
-			
+			System.out.println(sch);
 		}
 		return sch;
+	}
+	
+	public String printAllNurses()
+	{
+		String sch = "";
+		if(nurseList.size()==0)
+			return "No nurses exist";
+		for(Nurse n : nurseList)
+		{
+			sch =sch+  n.toString()+'\n';
+			System.out.println(sch);
+		}
+		return sch;
+		
 	}
 }

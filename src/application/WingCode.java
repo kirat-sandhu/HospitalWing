@@ -3,23 +3,168 @@ package application;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+
+import java.io.FileInputStream;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+
+
 public class WingCode {
-	 Stage applicationStage;
+	
+	
+			Stage applicationStage ; 
+		
+			  @FXML
+			    private Button searchNurseButton;
+
+			    @FXML
+			    private TextField nurseIdTextField;
+
+			    @FXML
+			    private DatePicker dobTextfield;
+
+			    @FXML
+			    private TextField fNameTextfield;
+
+			    @FXML
+			    private TextField lNameTextfield;
+
+			    @FXML
+			    private Label nurseIDerrorLabel;
+
+			    @FXML
+			    private Button doneButton;
+
+			    @FXML
+			    private Label addNurseErrorLabel;
+			    @FXML
+			    private Button printAllNurses;
+			    
+			    //for simplicity of this project we will create one manager with id 101
+				private Manager iManager=new Manager("Kyle","Bates", new Date(),101);
+
+/***	
+	 @FXML
+	    void accessManager(ActionEvent event)
+	    {
+		 try {
+	    	//Scene mainScene = applicationStage.getScene();
+	    	FXMLLoader loader = new FXMLLoader();
+			VBox root = loader.load(new FileInputStream("src/application/ManagerGUI.fxml"));	
+		//	WingCode controller	=(WingCode) loader.getController();
+		  Scene scene = new Scene(root,800,350);
+		  Stage newStage = new Stage();
+		  newStage.setScene(scene);
+		// 	controller.applicationStage= super.getStage();
+			applicationStage.setScene(scene);
+			Scene mainScene= applicationStage.getScene();
+
+			//applicationStage;
+			doneButton = new Button("Done ");
+	    	//doneButton.setOnAction(doneEvent->applicationStage.setScene(mainScene));
+
+			//Main.primaryStage = 
+		 } catch(Exception e) {
+				e.printStackTrace();
+			}
+	    }
+
+	 @FXML
+	    void accessNurse(ActionEvent event)
+	    {
+	    	
+	    }
+	 
+	 private long extractID(String input)
+	 {
+		 if(input.length()!=0)
+		 {
+			 for(char ch : input.toCharArray())
+			 {
+				 if(!Character.isDigit(ch))
+					 return 0;
+			 }
+			 return Long.parseLong(input);
+		 
+		 }
+		 else return 0;
+	 }
+	 
+	 private void printScheduleOfNurseButtonPressed(long id)
+	 {
+		 //	Scene prevScene= applicationStage.getScene();
+	    	nurseIDerrorLabel.setText("");
+
+		 	VBox scheduleContainer= new VBox(50);
+	    	Label scheduleOfANurse = new Label("");
+	    	doneButton = new Button("Done");
+	    	scheduleContainer.getChildren().addAll(scheduleOfANurse,doneButton);
+	    	Scene newScene = new Scene(scheduleContainer);
+	    	applicationStage.setScene(newScene);
+
+	    	scheduleOfANurse.setText(iManager.printSchedule(id));
+
+	    	
+	    //	doneButton.setOnAction(doneEvent->applicationStage.setScene(super.getStage()));
+
+	    	
+	 }
+	  @FXML
+	    void findNurse(ActionEvent event) {
+	    //	Scene mainScene = applicationStage.getScene();
+	    	nurseIDerrorLabel.setText("");
+	    	if(nurseIdTextField.getText()=="")
+	    		nurseIDerrorLabel.setText("No Id Entered");
+	    	else if(extractID(nurseIdTextField.getText())==0)
+	    		searchNurseButton.setOnAction(doneEvent->nurseIDerrorLabel.setText(" Nurse not found in records.Enter valid ID "));
+	    	else
+	    	searchNurseButton.setOnAction(doneEvent->printScheduleOfNurseButtonPressed(extractID(nurseIdTextField.getText())));
+	    	
+		    	
+	    }
+	  
+	  @FXML
+	    void printAllNursesButtonPressed(ActionEvent event) {
+		 // applicationStage.getScene();
+
+			 VBox nurseListContainer = new VBox(100); 
+			 Label nurseListLabel= new Label();
+
+			 nurseListContainer.getChildren().addAll(nurseListLabel,doneButton);
+			 
+			 Scene newScene= new Scene(nurseListContainer);
+			
+			 applicationStage.setScene(newScene) ;
+			// applicationStage.getscene();
+			 applicationStage.setScene(newScene);
+
+			 printAllNurses.setOnAction(doneEvent->nurseListLabel.setText(iManager.printAllNurses()));
+
+		    	doneButton.setOnAction(doneEvent->applicationStage.setScene(newScene));
+
+			 
+
+	    }
+
+}
+*****/
 
 
     @FXML
@@ -46,8 +191,8 @@ public class WingCode {
     private Label addNurseLabel ;
     private Label nurseInputError;
     private TextField lastNameTextfield ;
-    private TextField dateOfBirth;
-	 
+    private DatePicker dateOfBirth;
+	private Label searchNurseScheduleLabel;
 
     private HBox textFieldContainer  ;
 	 
@@ -55,30 +200,52 @@ public class WingCode {
 	 
     private Button addnewNurseButton;
     private HBox buttonContainer ;
+  //  private Button doneButton;
     
 	Date managerDOB = new Date();
 	private ArrayList<Room>roomList;
 	private int roomCapacityInWing = 20;
-	private Manager iManager=new Manager("Kyle","Bates", managerDOB,101);
+//	private Manager iManager=new Manager("Kyle","Bates", managerDOB,101);
 	
+	
+	public WingCode()
+	{
+		
+		
+	}
    
 	 //I .matches("[0-9.]+")) to check if string --->This code was copied from
 	 public long extractID(String input)
 	 {
-		 return Long.parseLong(input);
+		 if(input.length()!=0)
+		 {
+			 for(char ch : input.toCharArray())
+			 {
+				 if(!Character.isDigit(ch))
+					 return 0;
+			 }
+			 return Long.parseLong(input);
+		 
+		 }
+		 else return 0;
 	 }
 	 
 	 
 	 
-	 void printNurseListNewScene()
+	 void printNurseListNewScene(Scene mainScene)
 	 {
-		VBox nurseListContainer = new VBox(400); 
+		   Scene prevScene = applicationStage.getScene();
+
+		 VBox nurseListContainer = new VBox(100); 
 		 nurseListLabel= new Label();
-		 nurseListLabel.setText(iManager.toString());
-		 nurseListContainer.getChildren().addAll(nurseListLabel);
-		 
+		 nurseListLabel.setText(iManager.printAllNurses());
+		 doneButton = new Button("Done");
+		 nurseListContainer.getChildren().addAll(nurseListLabel,doneButton);	 
 		 Scene newScene= new Scene(nurseListContainer);
 		 applicationStage.setScene(newScene);
+	    	doneButton.setOnAction(doneEvent->applicationStage.setScene(prevScene));
+
+		 
 	 }
     
 	 public boolean validNames(String input)
@@ -112,6 +279,17 @@ public class WingCode {
 		 
 	 }
 	 
+	 
+	 public boolean isValidNum(String input)
+	 {
+		 boolean isValid = true;;
+		 for(char ch : input.toCharArray())
+		 {
+			 if(!Character.isDigit(ch))
+				 isValid = false;
+		 }
+		 return isValid;
+	 }
 	 
 //	 takes a string and returns a array of integers in the format[date, month, year]
 	 public int[] arrayOfDOB(String input)
@@ -147,7 +325,7 @@ public class WingCode {
 	}
 	 
 	 
-	 
+	 //to convert string to date
 	 public Date setDate(int[] date)
 	 {
 		 Calendar c = Calendar.getInstance(); 
@@ -156,51 +334,57 @@ public class WingCode {
 		 c.set(Calendar.YEAR, date[2]);
 
 		 return ( Date)( c.getTime());
+
+			// Date dob = new Date();
+		//	 int[] arrayDOB = arrayOfDOB(dateOfBirth.getText());
+			 
+
+			// if(arrayDOB[0]==0||arrayDOB[1]==0||arrayDOB[2]==0||(arrayDOB[0]>31 ||arrayDOB[1]>12 || arrayDOB[2]>2022 ||arrayDOB[2]<1900))
+				// nurseInputError.setText("Please Enter valid date of birth in format :  DD-MM-YYYY");
+			// else
+			 
+				 // dob = setDate(arrayDOB);
+			 
 		 
 	 }
 	 
-	 void addButtonPressed(Scene newScene)
+	 
+	 
+	 //code to convert local date to date was taken from https://stackoverflow.com/questions/22929237/convert-java-time-localdate-into-java-util-date-type
+	 void addButtonPressed(Scene newScene,Scene prevScene,ActionEvent event)
 	 {
-		 nurseInputError.setText("");
-		 Date dob = new Date();
-		 int[] arrayDOB = arrayOfDOB(dateOfBirth.getText());
-		 System.out.println(arrayDOB[0]);
-		 System.out.println(arrayDOB[1]);
-		 System.out.println(arrayDOB[2]);
+		 if(dateOfBirth.getValue() == null || !validNames(firstNameTextfield.getText()) ||validNames(lastNameTextfield.getText()))
+		  { 
+			 if(!validNames(firstNameTextfield.getText()) && validNames(lastNameTextfield.getText()))
+				addNurseLabel.setText("Please enter valid first and selecct date of birth");
+			 else  if(validNames(firstNameTextfield.getText()) && !validNames(lastNameTextfield.getText()))
+				 addNurseLabel.setText("Please enter valid last name and select date of birth");
+			 else
+				addNurseLabel.setText("Please enter valid names and select date of birth");
+			 return;
 
-		 if(arrayDOB[0]==0||arrayDOB[1]==0||arrayDOB[2]==0||(arrayDOB[0]>31 ||arrayDOB[1]>12 || arrayDOB[2]>2022 ||arrayDOB[2]<1900))
-			 nurseInputError.setText("Please Enter valid date of birth in format :  DD-MM-YYYY");
-		 else
-		 {
-			  dob = setDate(arrayDOB);
-
-		 }
-		 
-
-		 if(validNames(firstNameTextfield.getText()) &&validNames(lastNameTextfield.getText()))
-		 {
-			 iManager.addNurses(firstNameTextfield.getText(),lastNameTextfield.getText(), dob);
-			 addnewNurseButton.setOnAction(doneEvent->addNurseLabel.setText("Nurse Successfully Added"));
-		 }
-		 
-		 else
-			 addnewNurseButton.setOnAction(doneEvent->addNurseLabel.setText("Please enter valid first and lastname"));
-
+		  }
+         LocalDate i = dateOfBirth.getValue();
+         Date dob = Date.from(i.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+			 iManager.addNurses(firstNameTextfield.getText(),lastNameTextfield.getText(),dob);
+			 addNurseLabel.setText("Nurse Successfully Added");
 	    	applicationStage.setScene(newScene);
+	    	doneButton.setOnAction(doneEvent->applicationStage.setScene(prevScene));
 
-		 
 	 }
-	 //https://www.geeksforgeeks.org/javafx-choicebox/---->code for adding array  values to choicebox
+	 
 	 //brings up new window where a manager can add nurses to his wing by inputting a valid name and date of birth
 	 void addNurseNewScene()
 	 {
+		    Scene prevScene = applicationStage.getScene();
+
 		  addNurseContainer = new VBox(50);
 		 
 		  firstNameTextfield = new TextField();
-		  addNurseLabel = new Label("Please Enter first name, last Name and Date of Birth respectively");
+		  addNurseLabel = new Label("Please Enter first name	, last Name 	and Date of Birth respectively");
 		  nurseInputError = new Label("");
 		  lastNameTextfield = new TextField();
-		  dateOfBirth = new TextField();
+		  dateOfBirth = new DatePicker();
 		 
 
 		  textFieldContainer  = new HBox();
@@ -211,19 +395,41 @@ public class WingCode {
 		 
 		  addnewNurseButton = new Button("Add");
 		  buttonContainer  = new HBox();
+		  doneButton = new Button("Done");
 		  
 		 buttonContainer.getChildren().addAll(addnewNurseButton);
-		 addNurseContainer.getChildren().addAll(addNurseLabel,textFieldContainer,errorContainer,addnewNurseButton);
+		 addNurseContainer.getChildren().addAll(addNurseLabel,textFieldContainer,errorContainer,addnewNurseButton,doneButton);
 
 	    	Scene newScene = new Scene(addNurseContainer);
 	    	
 	    	applicationStage.setScene(newScene);
+	    	addnewNurseButton.setOnAction(doneEvent->addButtonPressed(newScene,prevScene,doneEvent));
+	    	doneButton.setOnAction(doneEvent->applicationStage.setScene(prevScene));
+    
+	 }
+	 
+	 public void printScheduleOfNurseButtonPressed(String idInput)
+	 {
+	    	Scene prevScene = applicationStage.getScene();
+	    	VBox scheduleContainer= new VBox(200);
+	    	Label scheduleOfANurse = new Label("");
+			  doneButton = new Button("Done");
 
-			 System.out.println(dateOfBirth.getText());
+	    	scheduleContainer.getChildren().addAll(scheduleOfANurse,doneButton);
+	    	Scene newScene = new Scene(scheduleContainer);
 
-	    	addnewNurseButton.setOnAction(doneEvent->addButtonPressed(newScene));
+	    	if((extractID(idInput)==0))
+	    		nurseListLabel.setText("Enter valid employee Id");
+	    	else
+	    	{
+	    		scheduleOfANurse.setText(iManager.printSchedule(extractID(idInput)));
+		    	applicationStage.setScene(newScene);
 
-	    
+	    	};
+	    	
+	    	doneButton.setOnAction(doneEvent->applicationStage.setScene(prevScene));
+
+	    	
 	 }
     @FXML
     void accessManager(ActionEvent event)
@@ -239,42 +445,70 @@ public class WingCode {
     		Label searchNurseScheduleLabel = new Label("");
     		HBox addNurseButtonContainer = new HBox();
     		TextField nurseEmp = new TextField();
-    		 printNurseScheduleButton = new Button("Search schedule of a nurse");
-    		searchNurseAchedule.getChildren().addAll(searchNurseScheduleLabel,nurseEmp,printNurseScheduleButton);
+			  doneButton = new Button("Done");
 
-    		
-    		if(nurseEmp!=null && nurseEmp.getText().matches("[0-9.]+"))
-    		printNurseScheduleButton.setOnAction(doneEvent->nurseListLabel.setText(iManager.printSchedule(extractID(nurseEmp.getText()))));
-    		else
-    			printNurseScheduleButton.setOnAction(doneEvent->nurseListLabel.setText("Enter valid employee Id"));
+    		 printNurseScheduleButton = new Button("Search schedule of a nurse");
+    		searchNurseAchedule.getChildren().addAll(searchNurseScheduleLabel,printNurseScheduleButton,nurseEmp);
+
+    	//	System.out.println(extractID(nurseEmp.getText()));   
+    	//	System.out.println(nurseEmp.getText()+" noooo");
+    	//	if(extractID(nurseEmp.getText())!=0)
+    		printNurseScheduleButton.setOnAction(doneEvent->printScheduleOfNurseButtonPressed(nurseEmp.getText()));
+    	//	else
+    	//		printNurseScheduleButton.setOnAction(doneEvent->nurseListLabel.setText("Enter valid employee Id"));
     		
 	    	 printNurseListButton = new Button("Print all the nurses");
 	    	 
-	    //	printNurseListButton.setOnAction(doneEvent->nurseListLabel.setText(iManager.toString()));
-
-	    	printNurseListButton.setOnAction(doneEvent->printNurseListNewScene());
+	    	 
 
 	    	addNurseButton = new Button("Add new Nurse");
+	    
 
 	    	addNurseButtonContainer.getChildren().addAll(addNurseButton);
-	    	managerWindowContainer.getChildren().addAll(searchNurseAchedule,printNurseListButton,addNurseButtonContainer);
+	    	managerWindowContainer.getChildren().addAll(searchNurseAchedule,printNurseListButton,addNurseButtonContainer,doneButton);
+	    	Scene newScene = new Scene(managerWindowContainer);
+	    	applicationStage.setScene(newScene);
+	    //	Scene newScene = new Scene(managerWindowContainer);
+	    	doneButton.setOnAction(doneEvent->applicationStage.setScene(mainScene));
+	    	printNurseListButton.setOnAction(doneEvent->printNurseListNewScene(newScene));
+
 	    	
 
 	    	addNurseButton.setOnAction(doneEvent->addNurseNewScene());
-
-	    	
-	    	
-    		
-    	//	quizGradeContainer.getChildren().add(rowContainer);
     	
     	}
     	
-		//doneButton.setOnAction(doneEvent-> calculateAverageQuizGrade(mainScene,quizGradeTextFieldList));
-		//quizGradeContainer.getChildren().add(doneButton);
 		
 		
-    	Scene newScene = new Scene(managerWindowContainer);
-    	applicationStage.setScene(newScene);
+    	
+    }
     
+    
+    @FXML
+    void accessNurse(ActionEvent event)
+    {
+    	Scene mainScene = applicationStage.getScene();
+    	VBox nurseWindowContainer= new VBox(50);
+    	 HBox nurseTextContainer = new HBox(20);	
+    	TextField nurseEmp = new TextField();
+    	nurseListLabel= new Label("");
+		  doneButton = new Button("Done");
+
+		  Label schedule= new Label("");
+			 printNurseScheduleButton = new Button("Search your schedule, by entering your ID");
+
+		  nurseTextContainer.getChildren().addAll(printNurseScheduleButton,nurseEmp);
+	    	nurseWindowContainer.getChildren().addAll(nurseTextContainer,schedule,nurseListLabel,doneButton);
+	    	Scene newScene = new Scene(nurseWindowContainer);
+	    	applicationStage.setScene(newScene);
+	    	
+	    //	printNurseScheduleButton.setOnAction(doneEvent->schedule.setText(iManager.printSchedule(extractID(nurseEmp.getText()))));
+    		//if(extractID(nurseEmp.getText())!=0)
+	    		printNurseScheduleButton.setOnAction(doneEvent->printScheduleOfNurseButtonPressed(nurseEmp.getText()));
+    	//	else
+    	//		printNurseScheduleButton.setOnAction(doneEvent->nurseListLabel.setText("Enter valid employee Id"));
+
+	    	doneButton.setOnAction(doneEvent->applicationStage.setScene(mainScene));
+
     }
 }

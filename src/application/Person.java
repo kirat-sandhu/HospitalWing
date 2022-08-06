@@ -34,4 +34,16 @@ public class Person  {
 		if(lName!=null)
 		lastName = lName;
 	}
+	
+	public  String toString()
+	{
+		
+		String newPerson = "";
+		
+		if(newPerson !=null)
+		{
+			newPerson = getName() + " \t"+    dateOfBirth.toString();
+		}
+		return newPerson;
+	}
 }

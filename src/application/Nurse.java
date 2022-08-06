@@ -58,14 +58,24 @@ public class Nurse extends Person {
 			
 			}
 			mySchedule.add((newShift));
-			
+			System.out.println(error);
 		}
+		
 		return error;
 	}
-	//prints the schedule of a nurse
+	//prints  of a nurse
 	public String toString() 
 	{
-		String myShifts="Schedule for" + getName() + '\n';
+		return "\t"+ empNumber + "\t" + super.toString() ;
+	}
+	
+	public String printScheduleOfNurse()
+	{
+		
+		String myShifts="";
+		if(mySchedule.size()==0)
+			return "No shifts assigned";
+		myShifts = "Schedule for" + getName() + '\n';
 		
 		
 		for(int i = 0; i< mySchedule.size();i++)
