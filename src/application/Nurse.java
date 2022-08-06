@@ -3,11 +3,17 @@ package application;
 import java.util.ArrayList;
 import java.util.Date;
 
+//Nurse is a child class of person but they  have their unique employee Id and own schedule
+//Schedule is a list of Shift Objects
+// manager adds/creates nurses and adds shifts to their schedule
+//nurses can only search for their schedule
+
 public class Nurse extends Person {
 
 	private long empNumber;
 	private ArrayList<Shift> mySchedule;
 	
+	//constructor that makes a nurse object that has id, name , date of birth and their pown schedule
 	public Nurse(String fName, String lName, Date dob, long nurseId) 
 	{
 		
@@ -15,8 +21,8 @@ public class Nurse extends Person {
 		empNumber = nurseId;
 		mySchedule = new ArrayList<Shift>();
 	}
-
-
+//overrides the  method in parent class and returns name of a nurse or the error if no nurse with id exists
+//@param--id of the nurse whose name will be returned
 	public String getName(long nurseId)
 	{
 		if(nurseId==empNumber)
@@ -63,12 +69,15 @@ public class Nurse extends Person {
 		
 		return error;
 	}
+	
+	//overrides the method in parent class
 	//prints  of a nurse
 	public String toString() 
 	{
 		return "\t"+ empNumber + "\t" + super.toString() ;
 	}
 	
+	//returns a string containg schedule of a nurse when called on that instance
 	public String printScheduleOfNurse()
 	{
 		
@@ -92,7 +101,8 @@ public class Nurse extends Person {
 	{
 		return empNumber;
 	}
-	//returns schedule for a given nurse
+	
+	//getter method that returns schedule that is list of shift objects for a given nurse
 	
 	public ArrayList<Shift> getSchedule()
 	{

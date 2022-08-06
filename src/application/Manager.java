@@ -7,6 +7,9 @@ import java.util.Date;
 
 //Managers are the employees that have list of nurses working, 
 //can add nurses to the list and remove them. they also assign shifts to all the nurses
+//Managers can add new nurses to their wing and when they add nurses an employeeNumber gets assigned to a nurse
+//nurse List--> stores all the nurses under this nurses
+//for sample two nurses with current date  as date of birth
 
 //For simplicity of this project there will be only one Manager with employee number --101
 
@@ -14,7 +17,7 @@ public class Manager extends Person {
 	
 	private ArrayList<Nurse> nurseList;
 	private long empNumber;
-	private  long firstEmpNum = 200;
+	private  static long firstEmpNum = 200;
 	public Manager(String fName, String lName, Date dob, long empId) 
 	{
 		
@@ -24,7 +27,7 @@ public class Manager extends Person {
 		
 		this.addNurses("Ian","Corbette", new Date());
 		this.addNurses("Sara","Xeng", new Date());
-		System.out.println(assignShift(201,new Date(),new Date(new Date().getTime()+(3600000*8)) ));
+		//System.out.println(assignShift(201,new Date(),new Date(new Date().getTime()+(3600000*8)) ));
 	}
 
 	//returns the next Available Employee Number to be Assigned when a new Nurse Is Added to the Wing
@@ -60,14 +63,15 @@ public class Manager extends Person {
 	
 	
 	//assigns shift to nurses using their employee Number
-	//and returns a string 
+	//and returns a string that contains the error or the message that shift was successfully added
+	//@param - employee id to whom we this new assign shift from start to end
 	public String assignShift(long empNumber,Date start, Date end)
 	{
 		String addShiftError="";
 		
 		Shift newShift = new Shift(start, end);
-		System.out.println(start);
-		System.out.println(end);
+		//System.out.println(start);
+	//	System.out.println(end);
 
 
 		for(Nurse n : nurseList)
@@ -86,7 +90,35 @@ public class Manager extends Person {
 		
 		return "Nurse Not Found. Please enter a valid employee Id";
 	}
+	
+	//assigns shift to nurses using their employee Number
+		//and returns a string that contains the error or the message that shift was successfully added
+		//@param - employee id to whom we assign this new  shift 
+
+	public String assignShift(long empNumber,Shift newShift)
+	{
+		String addShiftError="";
+		
+
+		for(Nurse n : nurseList)
+		{
+			if(n.getEmployeeId()==empNumber)
+			{
+			//	System.out.println(empNumber);
+				addShiftError = n.addShifts(newShift);
+				if(addShiftError.equals("error"))
+					addShiftError = "Please add a valid shift";
+				else
+				addShiftError ="Shift was successfully added "; 
+				return addShiftError;
+			}			
+		}
+		
+		return "Nurse Not Found. Please enter a valid employee Id";
+	}
 //assigns removes the given given from the schedule of a given nurse	
+	//for this project this method was never used but i want to use it after
+//removes a shift assigned to the nurse, and returns approporiate message whether it was an error or success removing shift
 	public String unassignShift(long empNumber,Date start, Date end)
 	{
 		String removeShiftError="";
@@ -114,6 +146,9 @@ public class Manager extends Person {
 		return newShift.toString() + removeShiftError;
 				
 	}			
+	
+	//prints schedule assigned to the nurse
+	//@param- id of the nurse whose schedule needs to be printed
 	public String printSchedule(long empId)
 	{
 		
@@ -126,11 +161,11 @@ public class Manager extends Person {
 			{
 				sch += n.getSchedule();
 			}
-			System.out.println(sch);
+			//System.out.println(sch);
 		}
 		return sch;
 	}
-	
+	//prints all nurses in the given nurse list under this manager
 	public String printAllNurses()
 	{
 		String sch = "";

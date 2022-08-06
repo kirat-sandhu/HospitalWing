@@ -2,20 +2,25 @@
 
 import java.util.Date;
 
+///This class reuses a lot of code from the flight class we worked on in Coding Challenges.Similar to flights, shofts have a start date and end date
+//
+
 public class Shift {
 
 
 	private  Date start;
 	private  Date end;
-	
+	private static long millisecondsPerHour = 3600000;
 	 
 	 public Shift() {
 		 
 		 start = new Date();
-		 end = new Date(start.getTime()+3600000);
+		 end = new Date(start.getTime()+millisecondsPerHour);
 		 
 	 }
  
+	 //constructor that makes an instance of this class when given start and end date
+	 //if given value for either is null, keeps their values unchanged
 	 public Shift(Date startDate,Date endDate)
 	{
 		if(startDate !=null && endDate!=null && startDate.before(endDate))
@@ -45,7 +50,19 @@ public class Shift {
 		}
 	}
 	
-
+//overloading constructor that takes start time of shift and legnth in terms of hours
+//
+	 public Shift(Date startDate, long lengthInHours)
+	 {
+		 Date endDate;
+		 if(startDate!=null)
+		 {  endDate = new Date (startDate.getTime()+convertHoursToMilliseconds(lengthInHours));
+		 	this.start = startDate;
+		 	this.end = endDate;
+		 }
+		 
+		 
+	 }
 	 
 	 //copy constructor
 	 public Shift(Shift toCopy)
@@ -69,6 +86,13 @@ public class Shift {
 			 end=null;
 			 
 		 }
+	 }
+	 
+	 
+	 public long convertHoursToMilliseconds(long lengthInHours)
+	 {
+		 return lengthInHours* millisecondsPerHour; 
+		 
 	 }
 	//setter method- sets value passed as departure if its valid departure time
 	 public void setStart(Date startTime)
