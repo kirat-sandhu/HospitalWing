@@ -27,9 +27,32 @@ public class Manager extends Person {
 		
 		this.addNurses("Ian","Corbette", new Date());
 		this.addNurses("Sara","Xeng", new Date());
+		Shift m1 = new Shift(new Date(3444444),8);
+		assignShift(201, m1);
 		//System.out.println(assignShift(201,new Date(),new Date(new Date().getTime()+(3600000*8)) ));
 	}
 
+	//copy constructor , creates a deep copy of manager objects
+	public Manager(Manager toCopy)
+	{
+		super(toCopy.getFName(),toCopy.getLName(),toCopy.getDOB()); 
+		this.empNumber = toCopy.empNumber;
+		copyNurseList(toCopy.nurseList);
+	}
+	
+	//setter method for the list of nurses assigned in this wing, creates a deep copy of nurseList passed 
+	private void copyNurseList(ArrayList<Nurse> toCopy)
+	{
+		this.nurseList= new ArrayList<Nurse>();
+		
+		for(Nurse n :toCopy)
+		{
+			Nurse newNurse= n;
+			nurseList.add(newNurse);
+		}
+		
+		
+	}
 	//returns the next Available Employee Number to be Assigned when a new Nurse Is Added to the Wing
 	//Even On removing nurse from the list, the employee number associated will not be available for any other person
 	//valid employee numbers start from 1001 , will be 1002 , 1003....and so on
@@ -105,7 +128,7 @@ public class Manager extends Person {
 		{
 			if(n.getEmployeeId()==empNumber)
 			{
-				System.out.println("in assign shift"+ empNumber);
+				//System.out.println("in assign shift"+ newShift.toString());
 				addShiftError = n.addShifts(newShift);
 				if(addShiftError.equals("error"))
 					addShiftError = "Please add a valid shift";
@@ -154,22 +177,30 @@ public class Manager extends Person {
 	{
 		
 		String sch = "";
-		int i = 0;
 		if(nurseList.size()==0)
 			return "No nurses exist";
+		
 		for(Nurse n : nurseList)
 		{
 			if(n.getEmployeeId()==empId)
 			{
+				if(n.getSchedule().size()==0)
+					return n.getName()+"\n"+ " No shifts assigned to you yet.";
+				sch =  n.getName() +"\n";
 				sch = sch+ "Shift start Date"+"\t" +"Shift end time"+"\n";
-				sch = "\t"+ n.getSchedule();
-				System.out.println("in sched printing nurse matched "+sch);
-
+				sch = "\t"+ n.printScheduleOfNurse();
+				return sch;
 			}
-			System.out.println("in sched printing "+sch);
+			//System.out.println("in sched printing "+sch);
 		}
-		return sch;
+		
+		//reached end of list no nurses exist with this id
+			return "No nurses with this id exist";
+		
+		
 	}
+	
+	
 	//prints all nurses in the given nurse list under this manager
 	public String printAllNurses()
 	{
@@ -179,7 +210,7 @@ public class Manager extends Person {
 		for(Nurse n : nurseList)
 		{
 			sch =sch+  n.toString()+'\n';
-			System.out.println(sch);
+		//	System.out.println(sch);
 		}
 		return sch;
 		

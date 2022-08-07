@@ -21,6 +21,17 @@ public class Nurse extends Person {
 		empNumber = nurseId;
 		mySchedule = new ArrayList<Shift>();
 	}
+	
+	
+	//copy constructor creates a deep copy of the Nurse instance pased as an argument
+	public Nurse(Nurse toCopy)
+	{
+		super(toCopy.getFName(),toCopy.getLName(),toCopy.getDOB()); 
+		this.empNumber = toCopy.getEmployeeId();
+		copySchedule(toCopy.getSchedule());//.copy();
+		
+	}
+	
 //overrides the  method in parent class and returns name of a nurse or the error if no nurse with id exists
 //@param--id of the nurse whose name will be returned
 	public String getName(long nurseId)
@@ -56,18 +67,18 @@ public class Nurse extends Person {
 					return error;
 				
 				}
-				else// if(!this.getSchedule().get(i).isBefore(newShift))
+				else if(!this.getSchedule().get(i).isBefore(newShift))
 				{
 					this.getSchedule().add(i, (newShift));
-					mySchedule.add((newShift));
-
+				//	mySchedule.add((newShift));
+					return error;
 				
 				}
 				
 			
 			}
-			//mySchedule.add((newShift));
-			System.out.println("in nurse add :"+error);
+			mySchedule.add((newShift));
+			//System.out.println("in nurse add :"+error);
 		}
 		
 		return error;
@@ -87,12 +98,12 @@ public class Nurse extends Person {
 		String myShifts="";
 		if(mySchedule.size()==0)
 			return "No shifts assigned";
-		myShifts = "Schedule for" + super.getName() + '\n';
-		
-		
+		myShifts = "Schedule for " + super.getName() + '\n';
+		myShifts = myShifts + '\t' + '\t'+"Start Time" +'\t' + '\t'+"End Time"+ '\n';
+
 		for(int i = 0; i< mySchedule.size();i++)
 		{
-			myShifts =myShifts + i + '\t' + mySchedule.get(i).toString();
+			myShifts =myShifts + (i+1) + '\t' + mySchedule.get(i).toString()+"\n";
 		}
 		
 		
@@ -111,5 +122,18 @@ public class Nurse extends Person {
 	{
 		
 		return this.mySchedule;
+	}
+	
+	//seeter method makes a deep copy of arraylist containing shift objects
+	public void copySchedule(ArrayList<Shift> toCopy )
+	{
+		this.mySchedule= new ArrayList<Shift>();
+		
+		for(Shift n :toCopy)
+		{
+			Shift newShift = n;
+			mySchedule.add(newShift);
+		}
+		
 	}
 }

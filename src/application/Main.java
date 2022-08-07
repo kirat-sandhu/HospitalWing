@@ -6,12 +6,12 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import java.util.Calendar;
-import java.util.Date;
 
 
+//Main file creates controller for the primary UI page and sets the stage as created in the fxml file.
+//Code from FXML user Interface Coding challenge was used in this file
+//For sample there is one manager created, two nurses and murse with id 201 is assigned one shift
 public class Main extends Application {
 	Stage mainStage;
 	@Override
@@ -34,16 +34,7 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 		launch(args);
-		Shift m1 = new Shift(new Date(3444444),8);
-		Shift m2 = new Shift(new Date(34444440),10);
-		Nurse n1 = new Nurse("Ian","Corbette", new Date(),203);
 		
-		System.out.println(m1.toString());
-		System.out.println(m2.toString());
-		
-		Manager iManager=new Manager("Kyle","Bates", new Date(),101);
-		iManager.addNurses("Ian","Corbette", new Date());
-		iManager.assignShift(201, m1);
 		
 	}
 }

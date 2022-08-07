@@ -2,8 +2,9 @@
 
 import java.util.Date;
 
-///This class reuses a lot of code from the flight class we worked on in Coding Challenges.Similar to flights, shofts have a start date and end date
-//
+///This class reuses a lot of code from my flight class we worked on in Coding Challenges.Similar to flights, shifts have a start date and end date
+//Nurses have as schedule which is list of shift objects.
+//A shift is valid if its length is 4,8 or hours.
 
 public class Shift {
 
@@ -50,9 +51,9 @@ public class Shift {
 		}
 	}
 	
-//overloading constructor that takes start time of shift and legnth in terms of hours
+//overloading constructor that takes start time of shift and length in terms of hours
 //
-	 public Shift(Date startDate, long lengthInHours)
+	 public Shift(Date startDate, double lengthInHours)
 	 {
 		 Date endDate;
 		 if(startDate!=null)
@@ -64,7 +65,7 @@ public class Shift {
 		 
 	 }
 	 
-	 //copy constructor
+	 //copy constructor that makes a deep copy of the shift object passed as argument
 	 public Shift(Shift toCopy)
 	 {
 		 if(toCopy!=null)
@@ -88,13 +89,13 @@ public class Shift {
 		 }
 	 }
 	 
-	 
-	 public long convertHoursToMilliseconds(long lengthInHours)
+	//helper method that  converts hours passed as argumnent into milliseconds and  returns
+	 public long convertHoursToMilliseconds(double lengthInHours)
 	 {
-		 return lengthInHours* millisecondsPerHour; 
+		 return (long)(lengthInHours* millisecondsPerHour); 
 		 
 	 }
-	//setter method- sets value passed as departure if its valid departure time
+	//setter method- sets value passed as start if its valid departure time
 	 public void setStart(Date startTime)
 	 {
 		 if(startTime!=null && end !=null && startTime.compareTo(end)<0)
@@ -103,6 +104,8 @@ public class Shift {
 			 start = new Date(startTime.getTime());		 
 	 }
 	 
+		//setter method- sets value passed as end if its valid departure time
+
 	 public void setEnd(Date endTime)
 	 {
 		 if(endTime!=null && start !=null && endTime.compareTo(start)>0)
@@ -112,7 +115,7 @@ public class Shift {
 		
 	 }
 	 
-	 
+	//getter method that returns a string with start date nd time of shift 
 	 public String getStart()
 	 {
 		if(start!=null)
@@ -120,7 +123,8 @@ public class Shift {
 		else
 			 return  "";
 	 }
-	 
+	
+		//getter method that returns a string with end date nd time of shift 
 	 public String getEnd()
 	 {
 		
@@ -140,7 +144,7 @@ public class Shift {
 		 else
 			 return false;
 	 }
-	//returns true if shift is 10 hours or 8 hours or 4 hors long and false otherwise
+	//returns true if shift is 10 hours or 8 hours or 4 hours long and false otherwise
 	 public boolean shiftLengthIsValid()
 	 {
 		 long dayOfArrival=0;

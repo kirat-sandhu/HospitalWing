@@ -5,8 +5,6 @@ import javafx.event.ActionEvent;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 
 import javafx.fxml.FXML;
@@ -21,6 +19,16 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 //This class reacts with the user and sets stage accordingly
+//A lot of code in this class makes a stage for the user to interact and waits for action event by the use
+//Since making stage requires huge chunks of code, to keep this class action event specific, 
+//i tried making all ui in different fxml files, which is more sophisticated method of coding
+//eg. ManagerGUI.fxml was made  but I could not make multiple controllers communicate effectively... 
+//but i want to work on it later so I included that file but havent used it
+
+
+//This class  code has DatePicker objects 	 
+//code to convert local date to date was taken from https://stackoverflow.com/questions/22929237/convert-java-time-localdate-into-java-util-date-type
+
 
 public class WingCode {
 	
@@ -30,7 +38,12 @@ public class WingCode {
 		    //for simplicity of this project we will create one manager with id 101
 			private Manager iManager=new Manager("Kyle","Bates", new Date(),101);
 
-		
+//a lot of variables(hboxes, vboxes, textfields , labels, buttons etc.) are declared and are used to make scene. 
+			//To avoid passing a lot of variables to a method, they are declared and initialised acc. to action events on different stages
+			
+			
+			
+			
 			  @FXML
 			    private Button searchNurseButton;
 
@@ -93,8 +106,6 @@ public class WingCode {
     private Button makeSceduleButton;;
     
 	Date managerDOB = new Date();
-	//private ArrayList<Room>roomList;
-	//private int roomCapacityInWing = 20;
 	private ChoiceBox<Integer> hrsInput ;
 	private	ChoiceBox<Integer> minutesInput ;
 
@@ -370,6 +381,7 @@ public class WingCode {
     * Assigns shift to the nurse, using herId,
     * @param-->all input fields on the assign Schedule Window
     * uses these values to make new Shift assignmShifts to the nurses
+    * handles input errors for the assign shift
     * **/
    private void assignShiftButtonPressed(String inputId,Label inputError,DatePicker assignShiftForDate, int hoursInput, int minutesInput,TextField shiftLength  )
     {
@@ -377,13 +389,21 @@ public class WingCode {
     	Shift defaltShift = new Shift();
 	    LocalDate i = assignShiftForDate.getValue();
         Date startDateInput = new Date(Date.from(i.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()).getTime() +
-        		defaltShift.convertHoursToMilliseconds((hoursInput + minutesInput)/60));
-          Shift newShift = new Shift(startDateInput,extractID(shiftLength.getText()));		
+        		defaltShift.convertHoursToMilliseconds((hoursInput + (minutesInput/60.0))));
+        
+      //  System.out.println(startDateInput.toString());
+    //    System.out.println(defaltShift.convertHoursToMilliseconds((hoursInput + minutesInput/60)));
+    //    System.out.println(hoursInput+"  "+ minutesInput/60.0);
 
-    	if(nurseId==0)
-    		inputError.setText("Enter valid Nurse Id");	
+        if((extractID(shiftLength.getText())==0))
+        		inputError.setText("Enter valid shift length");	
+        else if(nurseId==0)
+    		inputError.setText("Enter valid Nurse Id");		
     	else
+
+    	{  Shift newShift = new Shift(startDateInput,extractID(shiftLength.getText()));		
     		inputError.setText(iManager.assignShift(nurseId,newShift));
+    	}
     
     }
    
