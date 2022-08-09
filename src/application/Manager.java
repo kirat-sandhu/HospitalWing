@@ -140,7 +140,7 @@ public class Manager extends Person {
 		
 		return "Nurse Not Found. Please enter a valid employee Id";
 	}
-//assigns removes the given given from the schedule of a given nurse	
+// removes the given given from the schedule of a given nurse	
 	//for this project this method was never used but i want to use it after
 //removes a shift assigned to the nurse, and returns approporiate message whether it was an error or success removing shift
 	public String unassignShift(long empNumber,Date start, Date end)
@@ -207,6 +207,7 @@ public class Manager extends Person {
 		String sch = "";
 		if(nurseList.size()==0)
 			return "No nurses exist";
+		sch = sch + "\t"+"\t"+ "Nurse Id"+"\t"+"\t"+"Name "+"\t"+"\t"+"DOB"+"\n";
 		for(Nurse n : nurseList)
 		{
 			sch =sch+  n.toString()+'\n';

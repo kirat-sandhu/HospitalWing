@@ -287,8 +287,11 @@ public class WingCode {
 
 	    	scheduleContainer.getChildren().addAll(scheduleOfANurse,doneButton);
 	    	Scene newScene = new Scene(scheduleContainer);
-	    	if((extractID(idInput)==0))
-	    		nurseListLabel.setText("Enter valid employee Id");
+	    	if(idInput==null)
+	    		nurseListLabel.setText("Enter valid employee Id in the text field");
+	
+	    	else if((extractID(idInput)==0))
+	    		nurseListLabel.setText("Enter valid employee Id  in the text field");
 	    	else
 	    	{
 	    		scheduleOfANurse.setText(iManager.printSchedule(extractID(idInput)));
@@ -387,10 +390,17 @@ public class WingCode {
     {
     	long nurseId= extractID(inputId);
     	Shift defaltShift = new Shift();
-	    LocalDate i = assignShiftForDate.getValue();
+    	if(assignShiftForDate.getValue()== null)
+    	{
+    		inputError.setText("Choose a valid date");	
+    		return;
+    	}
+    	
+    	 LocalDate i = assignShiftForDate.getValue();
+	    //get the milliseconds for the date and then add hours and minutes worth milliseconds
         Date startDateInput = new Date(Date.from(i.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()).getTime() +
         		defaltShift.convertHoursToMilliseconds((hoursInput + (minutesInput/60.0))));
-        
+    	
       //  System.out.println(startDateInput.toString());
     //    System.out.println(defaltShift.convertHoursToMilliseconds((hoursInput + minutesInput/60)));
     //    System.out.println(hoursInput+"  "+ minutesInput/60.0);

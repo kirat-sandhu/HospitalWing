@@ -4,7 +4,6 @@ import java.util.Date;
 
 ///This class reuses a lot of code from my flight class we worked on in Coding Challenges.Similar to flights, shifts have a start date and end date
 //Nurses have as schedule which is list of shift objects.
-//A shift is valid if its length is 4,8 or hours.
 
 public class Shift {
 
