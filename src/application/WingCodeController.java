@@ -26,11 +26,12 @@ import javafx.stage.Stage;
 //but i want to work on it later so I included that file but havent used it
 
 
-//This class  code has DatePicker objects 	 
-//code to convert local date to date was taken from https://stackoverflow.com/questions/22929237/convert-java-time-localdate-into-java-util-date-type
+//This class  code has DatePicker objects 	
+//code to convert local date to date was taken from https://stackoverflow.com/questions/22929237/
+//convert-java-time-localdate-into-java-util-date-type------------------- at line 403
 
 
-public class WingCode {
+public class WingCodeController {
 	
 	
 			Stage applicationStage ; 
@@ -386,20 +387,22 @@ public class WingCode {
     * uses these values to make new Shift assignmShifts to the nurses
     * handles input errors for the assign shift
     * **/
-   private void assignShiftButtonPressed(String inputId,Label inputError,DatePicker assignShiftForDate, int hoursInput, int minutesInput,TextField shiftLength  )
+   private void assignShiftButtonPressed(String inputId,Label inputError,DatePicker assignShiftForDate, ChoiceBox<Integer> hoursInput, ChoiceBox<Integer> minutesInput,TextField shiftLength  )
     {
+	   if(inputId==null||hoursInput.getValue()==null ||minutesInput.getValue()==null||assignShiftForDate.getValue()== null)
+	   {   inputError.setText("Enter a valid data");
+	   	return;
+	   }
+	   
     	long nurseId= extractID(inputId);
     	Shift defaltShift = new Shift();
-    	if(assignShiftForDate.getValue()== null)
-    	{
-    		inputError.setText("Choose a valid date");	
-    		return;
-    	}
+    	
     	
     	 LocalDate i = assignShiftForDate.getValue();
 	    //get the milliseconds for the date and then add hours and minutes worth milliseconds
+    	 //the lines below are copied
         Date startDateInput = new Date(Date.from(i.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()).getTime() +
-        		defaltShift.convertHoursToMilliseconds((hoursInput + (minutesInput/60.0))));
+        		defaltShift.convertHoursToMilliseconds((hoursInput.getValue() + (minutesInput.getValue()/60.0))));
     	
       //  System.out.println(startDateInput.toString());
     //    System.out.println(defaltShift.convertHoursToMilliseconds((hoursInput + minutesInput/60)));
@@ -459,8 +462,9 @@ public class WingCode {
 		applicationStage.setScene(newScene);
 		
 		
-      //  Shift newShiftTime = new Shift(startDateInput,extractID(shiftLength.getText()));		
-        assignShiftButton.setOnAction(doneEvent->assignShiftButtonPressed(nurseIdForShift.getText(),inputErrorLabel,assignShiftForDate,(int)hrsInput.getValue() ,(int)minutesInput.getValue(),shiftLength));
+      //  Shift newShiftTime = new Shift(startDateInput,extractID(shiftLength.getText()));	
+		
+        assignShiftButton.setOnAction(doneEvent->assignShiftButtonPressed(nurseIdForShift.getText(),inputErrorLabel,assignShiftForDate,hrsInput ,minutesInput,shiftLength));
     	doneButton.setOnAction(doneEvent->applicationStage.setScene(prevScene));
 
     }

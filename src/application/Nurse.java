@@ -23,6 +23,11 @@ public class Nurse extends Person {
 	}
 	
 	
+
+	
+	
+	
+	
 	//copy constructor creates a deep copy of the Nurse instance pased as an argument
 	public Nurse(Nurse toCopy)
 	{
@@ -59,7 +64,7 @@ public class Nurse extends Person {
 		{	
 			for( i = 0; i< this.getSchedule().size();i++)
 			{	
-				shiftIsValid = (!mySchedule.get(i).overlapsWith(newShift))|| newShift.shiftLengthIsValid();
+				shiftIsValid = (!mySchedule.get(i).overlapsWith(newShift));//|| newShift.shiftLengthIsValid();
 						
 				if(!shiftIsValid)
 				{	

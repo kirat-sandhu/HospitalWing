@@ -32,6 +32,11 @@ public class Manager extends Person {
 		//System.out.println(assignShift(201,new Date(),new Date(new Date().getTime()+(3600000*8)) ));
 	}
 
+	
+	
+
+	
+	
 	//copy constructor , creates a deep copy of manager objects
 	public Manager(Manager toCopy)
 	{
@@ -55,7 +60,7 @@ public class Manager extends Person {
 	}
 	//returns the next Available Employee Number to be Assigned when a new Nurse Is Added to the Wing
 	//Even On removing nurse from the list, the employee number associated will not be available for any other person
-	//valid employee numbers start from 1001 , will be 1002 , 1003....and so on
+	//valid employee numbers start from 201 , will be 202 , 203....and so on
 	public long assignEmployeeNumber()
 	{
 		return ++firstEmpNum;
@@ -207,7 +212,7 @@ public class Manager extends Person {
 		String sch = "";
 		if(nurseList.size()==0)
 			return "No nurses exist";
-		sch = sch + "\t"+"\t"+ "Nurse Id"+"\t"+"\t"+"Name "+"\t"+"\t"+"DOB"+"\n";
+		sch = sch + "\t"+ "Nurse Id"+"\t"+"\t"+"\t"+"Name "+"\t"+"\t"+"DOB"+"\n";
 		for(Nurse n : nurseList)
 		{
 			sch =sch+  n.toString()+'\n';

@@ -19,7 +19,7 @@ public class Main extends Application {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			VBox root = loader.load(new FileInputStream("src/application/Wing.fxml"));	
-			WingCode controller	=(WingCode) loader.getController();
+			WingCodeController controller	=(WingCodeController) loader.getController();
 		
 			Scene scene = new Scene(root,800,350);
 

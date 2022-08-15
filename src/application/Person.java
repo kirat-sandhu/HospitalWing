@@ -23,6 +23,12 @@ public class Person  {
 		
 	}
 	
+	
+	 
+
+	
+	
+	
 	//copy constructor creates a deep copy of the person passed as argument
 	public Person(Person toCopy)
 	{
@@ -34,7 +40,7 @@ public class Person  {
 	//Getter method that returns first and last Name in one string
 	public String getName()
 	{
-		return firstName + " " + lastName;
+		return getFName() + " " + getLName();
 		
 	}
 	

@@ -64,6 +64,9 @@ public class Shift {
 		 
 	 }
 	 
+	 
+	
+	 
 	 //copy constructor that makes a deep copy of the shift object passed as argument
 	 public Shift(Shift toCopy)
 	 {
@@ -142,29 +145,6 @@ public class Shift {
 			 return otherShift.start.equals(this.start) &&otherShift.end.equals(this.end);
 		 else
 			 return false;
-	 }
-	//returns true if shift is 10 hours or 8 hours or 4 hours long and false otherwise
-	 public boolean shiftLengthIsValid()
-	 {
-		 long dayOfArrival=0;
-		 long dayOfDeparture=0;		
-		 long estimatedLength = 0;
-		 boolean isValid= false;
-		
-		 if(start==null || end == null||end.compareTo(start)<0)
-			 estimatedLength= 0;
-		 else
-		 {
-			 dayOfArrival=end.getTime();
-			 dayOfDeparture= start.getTime();
-			 estimatedLength = (( dayOfArrival-dayOfDeparture)/millisecondsPerHour);
-		 }
-		 
-		 if(estimatedLength==8||estimatedLength==10||estimatedLength==4)
-			 isValid=  true ;
-		 
-			 
-			 return isValid;
 	 }
 	
 	 //true if the diff. between two shifts is atleast 12 hours

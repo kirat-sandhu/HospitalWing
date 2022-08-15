@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="525.0" prefWidth="552.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.WingCode">
+<VBox alignment="CENTER" prefHeight="525.0" prefWidth="552.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.WingCodeController">
    <children>
       <Label prefHeight="354.0" prefWidth="520.0" text="This is a hospital wing management system, where nurses can  check their schedules. Each wing has one manager and list of nurses assigned. Managers can add new nurses and assign new shifts to them and check schedule by entering their employee Id. They can see all nurses available to figure out their employee Id." textFill="#056127" wrapText="true">
          <font>
